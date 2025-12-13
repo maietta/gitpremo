@@ -52,6 +52,19 @@ A lightweight, self-hosted Git service built for speed and simplicity. GitPremo 
     bun dev
     ```
 
+### Configuration
+
+You must set the following environment variables (in a `.env` file or your deployment platform):
+
+- `BETTER_AUTH_SECRET`: A random string used to sign session tokens.
+- `BETTER_AUTH_URL`: The full public URL of your instance (e.g., `http://localhost:3000`).
+
+To generate a secure secret, you can run:
+
+```bash
+openssl rand -base64 32
+```
+
 ### SSH Testing
 
 The project includes a Dockerized SSH server configuration for testing git-over-ssh locally.
