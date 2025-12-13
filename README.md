@@ -21,7 +21,7 @@ A lightweight, self-hosted Git service built for speed and simplicity. GitPremo 
 ## Tech Stack
 
 - **Runtime**: [Bun](https://bun.sh)
-- **Framework**: [SvelteKit 5](https://svelte.dev)
+- **Framework**: [SvelteKit](https://svelte.dev) (using Svelte 5)
 - **Database**: [SQLite](https://sqlite.org) with [Drizzle ORM](https://orm.drizzle.team)
 - **Authentication**: [Better Auth](https://www.better-auth.com)
 - **Styling**: [TailwindCSS](https://tailwindcss.com)
