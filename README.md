@@ -1,5 +1,10 @@
 # GitPremo
 
+A reference **SvelteKit** package for a starter website. This is an incomplete project designed to give a place to start from.
+
+> [!IMPORTANT]
+> This project is designed to be **self-hosted** using a persistent filesystem (e.g. VPS, Docker). It uses SQLite and stores raw git repositories on disk. It will **not** work on serverless platforms like Vercel, Netlify, or Cloudflare Pages.
+
 A lightweight, self-hosted Git service built for speed and simplicity. GitPremo allows you to host repositories, manage organizations, and collaborate with your team using a familiar interface.
 
 ## Features
@@ -56,6 +61,33 @@ The project includes a Dockerized SSH server configuration for testing git-over-
 docker-compose -f docker-compose.ssh-test.yml up -d
 ```
 
+## Deployment
+
+This project includes a production-ready `Dockerfile` and is designed to be deployed on any platform that supports Docker, such as:
+
+- **Coolify**
+- **CapRover**
+- **Dockge**
+- **Portainer**
+- **VPS** (via Docker Compose)
+
+### Serverless Compatibility
+
+> [!CAUTION] > **GitPremo is NOT compatible with serverless platforms** (Vercel, Netlify, Cloudflare Pages, AWS Lambda).
+
+GitPremo requires a **persistent filesystem** to store SQLite databases and raw git repositories. Serverless environments typically provide ephemeral file systems that are wiped after execution, which would lead to immediate data loss.
+
+### Data Safety & Backups
+
+To ensure data safety, you **must** mount a host volume for the `/app/data` directory.
+
+We strongly recommend configuring an automated backup solution (e.g., a cron job) on the host machine to `rsync` this volume to an external or offline storage location:
+
+```bash
+# Example rsync backup command
+rsync -avz /path/to/host/data user@backup-server:/path/to/backups/
+```
+
 ## Production SSH Configuration (Linux)
 
 To enable Git operations over SSH on a production Linux server, follow these steps to configure `sshd` and the `git` user.
@@ -72,8 +104,22 @@ sudo useradd -r -m -s /bin/bash git
 
 Ensure `curl` and `jq` are installed for the helper scripts.
 
+**Debian/Ubuntu**
+
 ```bash
 sudo apt-get update && sudo apt-get install -y curl jq
+```
+
+**Arch Linux**
+
+```bash
+sudo pacman -Sy curl jq
+```
+
+**RHEL/CentOS/Fedora**
+
+```bash
+sudo dnf install -y curl jq
 ```
 
 ### 3. Configure GitPremo Scripts
@@ -119,7 +165,11 @@ Match User git
 ### 5. Restart SSH
 
 ```bash
+# Debian/Ubuntu
 sudo systemctl restart ssh
+
+# Arch/RHEL/Fedora
+sudo systemctl restart sshd
 ```
 
 ## Project Structure
