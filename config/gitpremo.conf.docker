@@ -1,0 +1,4 @@
+API_URL=http://host.docker.internal:5173/api/ssh/keys
+# For shell.sh (authorize endpoint)
+AUTH_API_URL=http://host.docker.internal:5173/api/ssh/authorize
+REPO_ROOT=/data/orgs

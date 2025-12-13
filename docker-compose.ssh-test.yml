@@ -1,0 +1,16 @@
+services:
+  ssh-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh-test
+    ports:
+      - "127.0.0.2:22:22"
+    environment:
+      - API_URL=http://host.docker.internal:5173/api/ssh
+      - REPOS_ROOT=/data/orgs
+    volumes:
+      - ./data/orgs:/data/orgs
+      - ./config/sshd_test_config:/etc/ssh/sshd_config
+      - ./config/gitpremo.conf.docker:/etc/gitpremo/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

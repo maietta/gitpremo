@@ -1,0 +1,21 @@
+Port 22
+#HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Disable password auth
+
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+
+# Key authentication
+
+PubkeyAuthentication yes
+AuthorizedKeysCommand /usr/bin/gitpremo-auth-keys
+AuthorizedKeysCommandUser root
+
+# Allow git user
+
+AllowUsers git
+
+# Logging
+
+LogLevel DEBUG3

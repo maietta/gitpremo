@@ -1,0 +1,26 @@
+FROM alpine:3.18
+
+# Install SSH, Git, Curl, JQ, Bash
+RUN apk add --no-cache openssh git curl jq bash
+
+# Create git user
+RUN adduser -D -s /usr/bin/gitpremo-shell git
+RUN passwd -u git
+
+# Configure SSH
+RUN mkdir -p /etc/ssh
+RUN ssh-keygen -A
+
+# Copy scripts
+COPY scripts/auth-keys.sh /usr/bin/gitpremo-auth-keys
+COPY scripts/shell.sh /usr/bin/gitpremo-shell
+
+# Make executable
+RUN chmod +x /usr/bin/gitpremo-auth-keys /usr/bin/gitpremo-shell
+
+# Create repo directory
+RUN mkdir -p /data/orgs && chown -R git:git /data/orgs
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config"]
