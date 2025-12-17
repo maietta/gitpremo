@@ -195,4 +195,4 @@ sudo systemctl restart sshd
 
 ## License
 
-MIT
+O'Sassy License
